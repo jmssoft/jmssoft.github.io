@@ -4,15 +4,18 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
   
-    <title>系统TTS朗读引擎环境的检测与修复 | JMediasoft</title>
+    <title>系统TTS朗读引擎环境的检测与修复 | 金媒体软件JMediasoft</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="JMediasoft">
     
+    <meta name="description" content="如果发现自己的TTS朗读引擎无法正常朗读了，比如在日语丸、瑞词中按帮助文档正确安装和配置了朗读引擎但仍然不能朗读，那么请详细阅读一下本文。
+这里所述的TTS朗读引擎一般是指基于SAPI5的朗读引擎问题（SAPI4的基本不会出问题，出问题也可以重装SAPI4来解决）。TTS朗读引擎环境是保证所安装的T">
+    
     <meta name="keywords" content="系统TTS朗读引擎环境的检测与修复">
     
     
-    <link rel="alternate" href="atom.xml" title="JMediasoft" type="application/atom+xml">
+    <link rel="alternate" href="atom.xml" title="金媒体软件JMediasoft" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -38,7 +41,7 @@
       <div>
 		
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="JMediasoft">JMediasoft</a></h1>
+				<h1 class="site-name"><a href="/" title="金媒体软件JMediasoft">金媒体软件JMediasoft</a></h1>
 				<a class="blog-motto"></a>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
@@ -53,7 +56,7 @@
 					
 						<li><a href="/archives">归档</a></li>
 					
-						<li><a href="/help">教学</a></li>
+						<li><a href="/service/buy/">购买</a></li>
 					
 						<li><a href="/tags">标签</a></li>
 					
@@ -83,7 +86,7 @@
     </p>
   <p class="article-time">
     <time datetime="2018-11-10T09:04:18.000Z" itemprop="datePublished">2018-11-10</time>
-    Updated:<time datetime="2018-11-11T09:47:16.357Z" itemprop="dateModified">2018-11-11</time>
+    Updated:<time datetime="2019-01-24T07:40:37.123Z" itemprop="dateModified">2019-01-24</time>
     
   </p>
 </header>
@@ -92,10 +95,53 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、可能造成TTS朗读引擎不能朗读的原因"><span class="toc-number">1.</span> <span class="toc-text">一、可能造成TTS朗读引擎不能朗读的原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、具体检测系统TTS朗读环境是否正常的方法"><span class="toc-number">2.</span> <span class="toc-text">二、具体检测系统TTS朗读环境是否正常的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通用方法："><span class="toc-number">2.1.</span> <span class="toc-text">通用方法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、修复系统TTS朗读环境的方法"><span class="toc-number">3.</span> <span class="toc-text">三、修复系统TTS朗读环境的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载TTS修复特制补丁"><span class="toc-number">4.</span> <span class="toc-text">下载TTS修复特制补丁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载SAPI-dll注册工具-XP"><span class="toc-number">5.</span> <span class="toc-text">下载SAPI.dll注册工具(XP)</span></a></li></ol>
 		</div>
 		
-		  
+		<p>如果发现自己的TTS朗读引擎无法正常朗读了，比如在日语丸、瑞词中按帮助文档正确安装和配置了朗读引擎但仍然不能朗读，那么请详细阅读一下本文。</p>
+<p>这里所述的TTS朗读引擎一般是指基于SAPI5的朗读引擎问题（SAPI4的基本不会出问题，出问题也可以重装SAPI4来解决）。TTS朗读引擎环境是保证所安装的TTS朗读引擎程序能正常使用的必要条件。简单的讲，首先系统提供一个TTS朗读引擎的程序接口（这个就是所说的TTS朗读引擎环境），然后用户安装一些TTS朗读引擎程序，之后，我们的软件（如日语丸、瑞词等）通过系统TTS朗读引擎的程序接口调用用户安装的TTS朗读引擎程序来朗读指定的内容，这个是整个朗读过程的简单示意说明。（注意这里所述的“TTS朗读引擎环境”和“TTS朗读引擎程序”的不同）</p>
+<h2 id="一、可能造成TTS朗读引擎不能朗读的原因"><a href="#一、可能造成TTS朗读引擎不能朗读的原因" class="headerlink" title="一、可能造成TTS朗读引擎不能朗读的原因"></a>一、可能造成TTS朗读引擎不能朗读的原因</h2><p>一般来说，朗读引擎环境是正常集成在系统中的，在以下二种情况下，这个引擎环境会出现问题：</p>
+<ol>
+<li><strong>使用了精简版的Windows系统：</strong>精简版的Windows系统一般会精简掉TTS朗读引擎环境，造成TTS朗读引擎程序不能正常使用；这种情况下对于XP系统需要使用系统盘进行修复，对于Vista/Win7中以尝试使用特制补丁修复。（具体方法在文章后面说明。）</li>
+<li><strong>朗读引擎环境被后天破坏：</strong>这个原因多方面，包括卸载了一些本身会破坏系统朗读引擎环境的程序（如Nextup的TTS朗读引擎程序，安装后不能卸载，卸载会破坏系统TTS朗读引擎环境等），无意中删除了系统某些相关文件、软件冲突等。</li>
+</ol>
+<h2 id="二、具体检测系统TTS朗读环境是否正常的方法"><a href="#二、具体检测系统TTS朗读环境是否正常的方法" class="headerlink" title="二、具体检测系统TTS朗读环境是否正常的方法"></a>二、具体检测系统TTS朗读环境是否正常的方法</h2><ol>
+<li><strong>如果是XP系统：</strong>控制面板－语音（经典视图）－文本－语音转换，在弹出窗口选择可用的引擎尝试试听。如果在前面这个过程中任何一步出现错误，或在“语音转换”窗口无可用的引擎，或试听无声音则都表示系统TTS朗读引擎环境有问题。</li>
+<li><strong>如果是Vista/Win7系统：</strong>控制面板－轻松访问－语音识别－左侧“文本到语音转换”－弹出语音属性对话框。如果在前面这个过程中任何一步出现错误，或在语音属性对话框窗口无可用的引擎，或试听无声音则都表示系统TTS朗读引擎环境有问题。</li>
+<li><strong>最简单的方法：</strong>在系统盘搜索 sapi.dll 如果找不到，可以明确确定系统TTS朗读引擎环境被精简掉了，如果找得到，则一般的情况是由于TTS朗读引擎环境后天遭到破坏或安装的TTS朗读引擎程序本身有问题。</li>
+</ol>
+<h3 id="通用方法："><a href="#通用方法：" class="headerlink" title="通用方法："></a>通用方法：</h3><p>下载我们的朗读引擎检测程序“TTS测试”（下载地址：<a href="http://u.115.com/file/f6cf396f44/%22" target="_blank" rel="noopener">千脑下载</a>　<a href="http://down.qiannao.com/space/file/jmssoft/-4e0a-4f20-5206-4eab/res2010/tools/TTSTest.rar/.page/%22" target="_blank" rel="noopener">百度网盘下载</a>），绿色软件，下载后直接在要检测的电脑上启动程序，在左侧选择一个引擎，单击后面的“试听”按钮进行试听。</p>
+<ol>
+<li>如果（情况1）左侧朗读引擎列表没有列出任何朗读引擎（完整的系统至少有1、2种可用引擎）；</li>
+<li>或者（情况2）能加载到系列中的朗读引擎，但在朗读引擎试听时弹出错误或没有声音；</li>
+</ol>
+<p>对于情况1基本可以确定是TTS朗读引擎环境的问题，而情况2更可能是因为TTS朗读引擎程序本身的问题，当然也可能是由于TTS引擎环境后天破坏。<br>对于XP系统，出现情况1的话只能通过系统盘来修复或重装系统，出现情况2的话先尝试重装有问题的引擎，再尝试使用特制补丁修复；<br>对于Vista/win7系统，出现情况1的话可以使用特制补丁修复，出现问题2的话一般是相应的朗读引擎出现问题。不管出现哪种情况，可以与我们的技术人员联系解决方法。</p>
+<h2 id="三、修复系统TTS朗读环境的方法"><a href="#三、修复系统TTS朗读环境的方法" class="headerlink" title="三、修复系统TTS朗读环境的方法"></a>三、修复系统TTS朗读环境的方法</h2><p>在“TTS测试”程序中能加载到引擎，但全部引擎都不能朗读：这种情况下不论XP、Vista/Win7，直接使用特制补丁修复。</p>
+<p>在“TTS测试”程序中能加载到引擎，部份引擎不能朗读和（或）朗读时弹出错误：这种情况下是TTS朗读引擎程序本身的问题，最常见的就是Neospeech的引擎经常出现这种问题，使用以下方法重新安装该TTS朗读引擎程序：</p>
+<ol>
+<li>关闭所有能关闭的程序</li>
+<li>通过控制面板卸载有问题的TTS朗读引擎程序</li>
+<li>重装该TTS朗读引擎 程序，安装路径中不要出现空格、中文等非英语字符，比如可以安装到 E:\tts\ttsname 这种路径下。</li>
+<li>安装完成后什么也不要做，立即重新启动电脑。</li>
+</ol>
+<p>在“TTS测试”程序中不能加载到任何引擎：这种情况下不论XP、Vista/Win7都只能说明是TTS引擎环境出现了问题。对于不同的系统有不同的处理方式。</p>
+<blockquote>
+<p>【注意】每一步修复完成后，都要重新打开（一定要重新打开）前面的“TTS测试”软件重新检测一下引擎是否没问题了，如果仍然有问题再进行后续的修复工作。</p>
+</blockquote>
+<p>（1）<strong>针对XP系统：</strong><br>首先尝试使用特制补丁修复看看（后文下载）；如果上面修复失败，将系统光盘插入光驱；进入X:\Windows\inf（X:表示系统所在的分区），找到sapi5.inf文件，右键单击它选择“安装”，然后由程序自动搜索或手动指向安装源中的i386文件夹所在路径，等待系统更新完成即可。如果上面修复依然失败， 那抱歉，只能重装系统了。</p>
+<p>（2）<strong>针对Vista/Win7系统：</strong><br>首先使用特制补丁修复（后文下载，一般情况下都能修复成功 ）；<br>如果上面修复失败，直接重装系统吧。</p>
+<h2 id="下载TTS修复特制补丁"><a href="#下载TTS修复特制补丁" class="headerlink" title="下载TTS修复特制补丁"></a>下载TTS修复特制补丁</h2><p><a href="http://pan.baidu.com/share/link?shareid=3402&amp;uk=2200950762" target="_blank" rel="noopener">百度云下载特制补丁</a></p>
+<blockquote>
+<p>安装注意：安装时采用默认安装设置，不要修改任何安装路径；支持32位、64位系统。</p>
+</blockquote>
+<h2 id="下载SAPI-dll注册工具-XP"><a href="#下载SAPI-dll注册工具-XP" class="headerlink" title="下载SAPI.dll注册工具(XP)"></a>下载SAPI.dll注册工具(XP)</h2><ul>
+<li><a href="http://dl.dbank.com/c022bior34" target="_blank" rel="noopener">DBank下载SAPI.dll注册工具</a></li>
+<li><a href="http://pan.baidu.com/share/link?shareid=3404&amp;uk=2200950762" target="_blank" rel="noopener">百度云下载SAPI.dll注册工具</a></li>
+</ul>
+<blockquote>
+<p><strong>使用说明：</strong>sapi.dll是朗读引擎环境的一个重要组件，有可能被取消了系统注册，所以如果你是XP系统，且能在系统盘中找到sapi.dll文件，则可以先试试使用这个文件修复它看看。</p>
+</blockquote>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -114,7 +160,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.jmediasoft.cn/test-tts/" data-title="系统TTS朗读引擎环境的检测与修复 | JMediasoft" data-tsina="" class="share clearfix">
+  <div data-url="http://www.jmediasoft.cn/test-tts/" data-title="系统TTS朗读引擎环境的检测与修复 | 金媒体软件JMediasoft" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -124,18 +170,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev">
- <a href="/smartword/" title="瑞词外语单词智能记忆系列">
+ <a href="/mp3-korean/" title="韩语MP3语音库下载、安装与配置">
   <strong>PREVIOUS:</strong><br>
   <span>
-  瑞词外语单词智能记忆系列</span>
+  韩语MP3语音库下载、安装与配置</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/help/tts-guide/" title="TTS朗读引擎向导">
+<a href="/jptts-install/" title="日语朗读引擎Show的安装与配置图文教程">
  <strong>NEXT:</strong><br> 
- <span>TTS朗读引擎向导
+ <span>日语朗读引擎Show的安装与配置图文教程
 </span>
 </a>
 </div>
@@ -155,7 +201,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、可能造成TTS朗读引擎不能朗读的原因"><span class="toc-number">1.</span> <span class="toc-text">一、可能造成TTS朗读引擎不能朗读的原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、具体检测系统TTS朗读环境是否正常的方法"><span class="toc-number">2.</span> <span class="toc-text">二、具体检测系统TTS朗读环境是否正常的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通用方法："><span class="toc-number">2.1.</span> <span class="toc-text">通用方法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、修复系统TTS朗读环境的方法"><span class="toc-number">3.</span> <span class="toc-text">三、修复系统TTS朗读环境的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载TTS修复特制补丁"><span class="toc-number">4.</span> <span class="toc-text">下载TTS修复特制补丁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载SAPI-dll注册工具-XP"><span class="toc-number">5.</span> <span class="toc-text">下载SAPI.dll注册工具(XP)</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -183,9 +229,9 @@
 		
 			<li><a href="/categories/学习辅助/" title="学习辅助">学习辅助<sup>3</sup></a></li>
 		
-			<li><a href="/categories/教学/" title="教学">教学<sup>11</sup></a></li>
+			<li><a href="/categories/教学/" title="教学">教学<sup>13</sup></a></li>
 		
-			<li><a href="/categories/教育游戏/" title="教育游戏">教育游戏<sup>2</sup></a></li>
+			<li><a href="/categories/教育游戏/" title="教育游戏">教育游戏<sup>1</sup></a></li>
 		
 			<li><a href="/categories/瑞词外语/" title="瑞词外语">瑞词外语<sup>4</sup></a></li>
 		
@@ -198,21 +244,21 @@
 	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/MP3语音库/" title="MP3语音库">MP3语音库<sup>4</sup></a></li>
+			<li><a href="/tags/MP3语音库/" title="MP3语音库">MP3语音库<sup>3</sup></a></li>
 		
-			<li><a href="/tags/TTS朗读引擎/" title="TTS朗读引擎">TTS朗读引擎<sup>4</sup></a></li>
+			<li><a href="/tags/TTS朗读引擎/" title="TTS朗读引擎">TTS朗读引擎<sup>7</sup></a></li>
 		
 			<li><a href="/tags/假名标注/" title="假名标注">假名标注<sup>2</sup></a></li>
 		
 			<li><a href="/tags/大家的日本语/" title="大家的日本语">大家的日本语<sup>1</sup></a></li>
 		
-			<li><a href="/tags/打字背单词/" title="打字背单词">打字背单词<sup>3</sup></a></li>
+			<li><a href="/tags/打字背单词/" title="打字背单词">打字背单词<sup>2</sup></a></li>
 		
 			<li><a href="/tags/新版标准日本语/" title="新版标准日本语">新版标准日本语<sup>1</sup></a></li>
 		
 			<li><a href="/tags/日语动词活用/" title="日语动词活用">日语动词活用<sup>2</sup></a></li>
 		
-			<li><a href="/tags/日语学习软件/" title="日语学习软件">日语学习软件<sup>7</sup></a></li>
+			<li><a href="/tags/日语学习软件/" title="日语学习软件">日语学习软件<sup>6</sup></a></li>
 		
 			<li><a href="/tags/日语背单词/" title="日语背单词">日语背单词<sup>2</sup></a></li>
 		
@@ -252,7 +298,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/MP3语音库/" style="font-size: 17.5px;">MP3语音库</a> <a href="/tags/TTS朗读引擎/" style="font-size: 17.5px;">TTS朗读引擎</a> <a href="/tags/假名标注/" style="font-size: 12.5px;">假名标注</a> <a href="/tags/大家的日本语/" style="font-size: 10px;">大家的日本语</a> <a href="/tags/打字背单词/" style="font-size: 15px;">打字背单词</a> <a href="/tags/新版标准日本语/" style="font-size: 10px;">新版标准日本语</a> <a href="/tags/日语动词活用/" style="font-size: 12.5px;">日语动词活用</a> <a href="/tags/日语学习软件/" style="font-size: 20px;">日语学习软件</a> <a href="/tags/日语背单词/" style="font-size: 12.5px;">日语背单词</a> <a href="/tags/标准日本语/" style="font-size: 10px;">标准日本语</a> <a href="/tags/注册中心/" style="font-size: 10px;">注册中心</a> <a href="/tags/知识管理软件/" style="font-size: 10px;">知识管理软件</a> <a href="/tags/英语学习软件/" style="font-size: 17.5px;">英语学习软件</a> <a href="/tags/英语背单词/" style="font-size: 15px;">英语背单词</a> <a href="/tags/软件使用问题/" style="font-size: 12.5px;">软件使用问题</a> <a href="/tags/韩语学习软件/" style="font-size: 12.5px;">韩语学习软件</a> <a href="/tags/韩语背单词/" style="font-size: 12.5px;">韩语背单词</a>
+       <a href="/tags/MP3语音库/" style="font-size: 14px;">MP3语音库</a> <a href="/tags/TTS朗读引擎/" style="font-size: 20px;">TTS朗读引擎</a> <a href="/tags/假名标注/" style="font-size: 12px;">假名标注</a> <a href="/tags/大家的日本语/" style="font-size: 10px;">大家的日本语</a> <a href="/tags/打字背单词/" style="font-size: 12px;">打字背单词</a> <a href="/tags/新版标准日本语/" style="font-size: 10px;">新版标准日本语</a> <a href="/tags/日语动词活用/" style="font-size: 12px;">日语动词活用</a> <a href="/tags/日语学习软件/" style="font-size: 18px;">日语学习软件</a> <a href="/tags/日语背单词/" style="font-size: 12px;">日语背单词</a> <a href="/tags/标准日本语/" style="font-size: 10px;">标准日本语</a> <a href="/tags/注册中心/" style="font-size: 10px;">注册中心</a> <a href="/tags/知识管理软件/" style="font-size: 10px;">知识管理软件</a> <a href="/tags/英语学习软件/" style="font-size: 16px;">英语学习软件</a> <a href="/tags/英语背单词/" style="font-size: 14px;">英语背单词</a> <a href="/tags/软件使用问题/" style="font-size: 12px;">软件使用问题</a> <a href="/tags/韩语学习软件/" style="font-size: 12px;">韩语学习软件</a> <a href="/tags/韩语背单词/" style="font-size: 12px;">韩语背单词</a>
     </div>
   </div>
 
